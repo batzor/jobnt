@@ -1,0 +1,11 @@
+# Silap's python virtual env
+env/
+
+# VSCode settings
+.vscode/
+
+# vim cache files
+*~
+
+# Compiled python files
+*.pyc
