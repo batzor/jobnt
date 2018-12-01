@@ -1,9 +1,15 @@
 # jobnt
 Job wiki
 
-# PostgreSQL database setup
+## Setting up Python (pip) libraries
+First of all, install all pip dependencies:
+```
+$ pip3 install -r requirements.txt
+```
 
-Use following information:
+# Setting up PostgreSQL database 
+
+Use following configuration from `jobnt/jobnt/settings.py`:
 
 	DATABASES = {
 	    'default': {
@@ -21,19 +27,19 @@ Use following information:
 
 1. Create user `admin`:
 
-		createuser -U postgres admin
+		$ createuser -U postgres admin
 
 2. Give permission to create databases and change password to `'admin'`:
 
 		# Run psql as superuser
-		psql -U postgres
+		$ psql -U postgres
 
 		# Give createdb permission to admin
-		alter user admin createdb;
+		postgres=# alter user admin createdb;
 
 		# Change password for admin to 'admin' (without single-quotes)
-		alter user admin with password 'admin';
+		postgres=# alter user admin with password 'admin';
 
 3. Create database `jobnt`:
 
-		createdb -U admin jobnt
+		$ createdb -U admin jobnt
