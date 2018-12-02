@@ -26,7 +26,7 @@ class JobOffer(models.Model):
     description = models.TextField(max_length = 1000, help_text="Enter a brief description of the job offer.")
     date_posted = models.DateField(default=timezone.now())	
     recruiter = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-
+    company_id = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
     @property
     def is_over(self):
         if self.deadline < timezone.now():
