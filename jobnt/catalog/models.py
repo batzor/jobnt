@@ -27,6 +27,7 @@ class JobOffer(models.Model):
     date_posted = models.DateField(default=timezone.now())	
     recruiter = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     company_id = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
+    apply_link = models.URLField()
     @property
     def is_over(self):
         if self.deadline < timezone.now():
