@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Catalog</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+{% extends 'catalog/wrapper.html' %}
+
+{% block content %}
 <div class="container">
     <!-- HEADER -->
     <header class="page-header">
 
         <!-- LOGO -->
-        <div class="logo"><img src="logo.png"></div>
+        {% load static %}
+        <div class="logo"><img src={% static "catalog/logo.png" %}></div>
 
         <!-- NAVBAR -->
         <nav class="nav">
@@ -37,20 +34,23 @@
         <!-- CATALOG ITEMS -->
         <main class="catalog">
           <div class="catalog-item">
+            catalog item 1
           </div>
 
           <div class="catalog-item">
+            catalog item 2
           </div>
 
           <div class="catalog-item">
+            catalog item 3
           </div>
 
           <div class="catalog-item">
+            catalog item 4
           </div>
         </main>
 
 
     </section>
 </div>
-</body>
-</html>
+{% endblock %}
