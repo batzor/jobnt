@@ -14,6 +14,9 @@ class Company(models.Model):
     descriptoin = models.TextField(max_length = 1000, help_text="Enter a brief description of the company.", null=True)	
     emp_number = models.IntegerField(null=True, blank=True)
 
+    def __str__(self):
+        return self.name
+
 class JobOffer(models.Model):
     """Model representing a job offer"""
 

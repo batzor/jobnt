@@ -1,4 +1,5 @@
 {% extends 'catalog/wrapper.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -10,41 +11,7 @@
     <h1>Catalog</h1>
   </header>
 
-  <form>
-    <!-- FILTERS -->
-    <div class="form-group">
-      <label for="nameQuery">Search by a keyword </label>
-      <div class="input-group mb-3">
-        <input type="text" id="nameQuery" class="form-control" placeholder="Enter a keyword(s)">
-      </div>
-    </div>
-    <!-- SALARY -->
-    <div class="form-group">
-      <label data-toggle="collapse" data-target="#salary-filter">
-        <input type="checkbox" /> Compensation
-      </label>
-      <div id="salary-filter" class="collapse">
-        <div class="form-group">
-          <label for="minSalary">Minimum</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">$</span>
-            </div>
-            <input type="number" id="minSalary" class="form-control" placeholder="Minimum (default 0)">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="maxSalary">Maximum</label>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">$</span>
-            </div>
-            <input type="number" id="maxSalary" class="form-control" placeholder="Maximum (default inf)">
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+  {% crispy form %}
   <!-- CATALOG ITEMS -->
   <main class="catalog">
     <div class="catalog-item">

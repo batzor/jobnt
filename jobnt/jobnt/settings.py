@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Template pack for crispy-forms package
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
