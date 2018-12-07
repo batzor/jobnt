@@ -25,4 +25,6 @@
 
 {% block js %}
 <!-- Here goes all js scripts that you want to load for this page -->
+{% load static %}
+<script type='text/javascript' src='{% static "catalog/scripts/bootstrap-tab.js"%}'>
 {% endblock %}
