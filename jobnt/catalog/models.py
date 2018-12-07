@@ -11,7 +11,7 @@ class Company(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular job")
     name = models.CharField(max_length=200, null=True)
-    descriptoin = models.TextField(max_length = 1000, help_text="Enter a brief description of the company.", null=True)	
+    description = models.TextField(max_length = 1000, help_text="Enter a brief description of the company.", null=True, blank=True)	
     emp_number = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
@@ -25,7 +25,7 @@ class JobOffer(models.Model):
     location = models.CharField(max_length = 200)
     deadline = models.DateField(blank=True)	
     salary = models.IntegerField(null=True, blank=True)
-    duration = models.CharField(max_length = 200, blank=True)
+    duration = models.IntegerField(null=True, blank=True)
     description = models.TextField(max_length = 1000, help_text="Enter a brief description of the job offer.")
     date_posted = models.DateField(default=timezone.now())	
     recruiter = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
