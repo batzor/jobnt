@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -123,5 +124,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+# Template pack for crispy-forms package
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
