@@ -41,6 +41,6 @@ def make_filters(data):
   return filters 
 
 def show_offers(data):
-  offers = JobOffer.objects.filter(**make_filters(data))
+  offers = JobOffer.objects.filter(**make_filters(data)).select_related()
   page = render_to_string('catalog/joboffers.html', {'offers': offers})
   return HttpResponse(page)
