@@ -13,11 +13,7 @@
 
   {% crispy form %}
   <!-- CATALOG ITEMS -->
-  <main class="catalog">
-    {% for offer in offers %}
-      <h3>{{ offer.name }}</h3>
-      <p>{{ offer.description }}</p>
-    {% endfor %}
+  <main class="catalog" id="joboffers">
   </main>
 
 </section>
@@ -26,5 +22,6 @@
 {% block js %}
 <!-- Here goes all js scripts that you want to load for this page -->
 {% load static %}
-<script type='text/javascript' src='{% static "catalog/scripts/bootstrap-tab.js"%}'>
+<script type='text/javascript' src='{% static "catalog/scripts/bootstrap-tab.js" %}'></script>
+<script type='text/javascript' src='{% static "catalog/scripts/main.js" %}'></script>
 {% endblock %}

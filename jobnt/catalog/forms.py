@@ -34,13 +34,12 @@ class JobSearchForm(forms.Form):
   # Setting the layout of the form 
   helper = FormHelper()
   helper.form_method = 'GET'
+  helper.form_id = 'search-form'
+  helper.form_action = 'search/'
   helper.add_input(Submit('search', 'Search'))
   helper.layout = Layout(
+    Field('name_field', placeholder='What do you want to do?'),
     Accordion(
-      AccordionGroup('Name',
-        Field('name_field', placeholder='What do you want to do?'),
-        active=True
-      ),
       AccordionGroup('Deadline',
         MultiWidgetField(
           'deadline_date_field', 
