@@ -1,4 +1,31 @@
 {% for offer in offers %}
-  <h3>{{ offer.name }}</h3>
-  <p>{{ offer.description }}</p>
+  <div class="card border-primary mb-3">
+    <div class="card-body">
+      <h3 class="card-title font-weight-bold">{{ offer.name }}</h3>
+      <ul class="list-inline"> 
+        {% if offer.location %}
+        <li class="list-inline-item">
+          <i class="fas fa-map-marker-alt mr-1"></i>
+          {{ offer.location }}
+        </li>
+        {% endif %}
+        {% if offer.duration %}
+        <li class="list-inline-item">
+          <i class="far fa-clock mr-1"> </i>
+          {{ offer.duration }} weeks 
+        </li>
+        {% endif%}
+        {% if offer.salary %}
+        <li class="list-inline-item">
+          <i class="fas fa-dollar-sign mr-1"></i>
+          {{ offer.salary }}
+        </li>
+        {% endif %}
+      </ul>
+      <p class="card-text"> {{ offer.description }} </p>
+      {% if offer.apply_link %}
+        <a href="{{ offer.apply_link }}" class="btn btn-primary" role="button">Apply</a>
+      {% endif %}
+    </div>
+  </div>
 {% endfor %}
