@@ -1,0 +1,28 @@
+{% extends 'catalog/wrapper.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- MAIN CONTAINER -->
+<section class="main-content">
+
+  <!-- PAGE HEADER -->
+  <header class="page-name">
+    <h1>Catalog</h1>
+  </header>
+
+  {% crispy form %}
+  <!-- CATALOG ITEMS -->
+  <main class="catalog">
+    {% for offer in offers %}
+      <h3>{{ offer.name }}</h3>
+      <p>{{ offer.description }}</p>
+    {% endfor %}
+  </main>
+
+</section>
+{% endblock %}
+
+{% block js %}
+<!-- Here goes all js scripts that you want to load for this page -->
+{% endblock %}
