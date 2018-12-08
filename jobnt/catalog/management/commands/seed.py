@@ -26,7 +26,7 @@ class JobFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.JobOffer
     
-    name = factory.Faker('name')
+    name = factory.Faker('job')
     location = factory.Faker('address')
     deadline = factory.Faker('date_between', start_date="-2y", end_date="+1y")
     salary = factory.Faker('random_int', min = 1000000, max = 10000000)
@@ -45,8 +45,13 @@ class FavoriteFactory(factory.django.DjangoModelFactory):
 class TagFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Tag
-    job = factory.Iterator(models.JobOffer.objects.all())
     name = factory.Faker('name')
+
+class JobTagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.JobTag
+    job = factory.Iterator(models.JobOffer.objects.all())
+    tag = factory.Iterator(models.Tag.objects.all())
 
 class Command(BaseCommand):
     help = 'Seeds the database.'
@@ -72,6 +77,10 @@ class Command(BaseCommand):
             default=50,
             type=int,
             help='The number of fake tags to create.')
+        parser.add_argument('--jobtag',
+            default=100,
+            type=int,
+            help='The number of fake jog tags to create.')
 
     def handle(self, *args, **options):
         for _ in range(options['user']):
@@ -84,4 +93,6 @@ class Command(BaseCommand):
             FavoriteFactory.create()
         for _ in range(options['tag']):
             TagFactory.create()
+        for _ in range(options['jobtag']):
+            JobTagFactory.create()
 
