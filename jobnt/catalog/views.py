@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from .forms import JobSearchForm
-from .models import JobOffer
+from .models import JobOffer, Favorite
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
@@ -61,3 +61,15 @@ def register(request):
   else:
     form = UserCreationForm()
   return render(request, 'catalog/register.html', {'form': form})
+
+def show_favs(request):
+    if request.user.is_authenticated:
+        user_favs = Favorite.objects.filter(user=request.user)
+        offers = []
+        for fav in user_favs:
+            offers.append(fav.job)
+        return render(request, 'catalog/favs.html', {'offers': offers})
+    else:
+        return render(request, 'accounts/login.html')
+
+
