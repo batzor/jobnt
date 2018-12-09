@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import UserSubscription, Company, JobOffer
+from .models import UserSubscription, Company, JobOffer, Favorite
 from django.http import HttpResponse
 
 def index(request):
@@ -8,13 +8,17 @@ def index(request):
   if not request.user.is_authenticated:
     args['need_login'] = True
   else:
-    # UserSubscription.
-    subs = UserSubscription.objects.filter(user=request.user)
     offers = JobOffer.objects.all()
     
+    subs = UserSubscription.objects.filter(user=request.user)
     subbed_companies = set()
     for sub in subs:
       subbed_companies.add(sub.company.id)
+
+    favs = Favorite.objects.filter(user=request.user)
+    favved_offers = set()
+    for fav in favs:
+      favved_offers.add(fav.job.id)
 
     args = {
         'need_login': False,
@@ -22,6 +26,7 @@ def index(request):
         'no_subs': subs.count() == 0,
         'offers': offers,
         'subbed_companies': subbed_companies,
+        'favved_offers': favved_offers,
       }
 
   return render(request, 'catalog/subs.html', args)
@@ -58,7 +63,3 @@ def rem_sub(request):
     return HttpResponse("OK: unsubscribed")
   else:
     return HttpResponse("OK: not subscribed")
-
-def favs(request):
-  args = {}
-  return render(request, 'catalog/favs.html', args)

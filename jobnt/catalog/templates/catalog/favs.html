@@ -5,21 +5,41 @@
 <!-- MAIN CONTAINER -->
 <section class="main-content">
 
-  <h1 class="page-name">Favorites</h1>
+  <h3 class="nice-header">Favorites</h3>
+
   <div class="container">
-    
-    <!-- CATALOG ITEMS -->
-
-    <main class="catalog" id="favs"> 
-      {% for offer in offers %}
+    <div class="rowjustify-content-centered">
+      <div class="col-8 mx-auto">
         
-        {% include "catalog/offer.html" %}
+        <!-- SUBSCRIPTIONS -->
+        <main class="catalog">
+          {% if need_login %}
+            <div style="text-align: center">Please log in to see favorites.</div>
+          {% elif no_favs %}
+            <div style="text-align: center">No favorites.</div>
+          {% else %}
 
-      {% endfor %}
-    </main>
+            {% for fav in favs %}
+
+              {% with offer=fav.job %}
+                {% include "catalog/offer.html" %}
+              {% endwith %}
+              
+            {% endfor %}
+
+          {% endif %}
+        </main>
+
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %}
 
 {% block js %}
+
+{% load static %}
+<script type='text/javascript' src='{% static "catalog/scripts/main.js" %}'></script>
+<script type='text/javascript' src='{% static "catalog/scripts/favs.js" %}'></script>
+
 {% endblock %}

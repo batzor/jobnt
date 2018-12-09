@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from .forms import JobSearchForm
-from .models import JobOffer, UserSubscription
+from .models import JobOffer, UserSubscription, Favorite
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
@@ -51,7 +51,17 @@ def show_offers(request, data):
   for sub in subs:
     subbed_companies.add(sub.company.id)
 
-  page = render_to_string('catalog/joboffers.html', {'offers': offers, 'subbed_companies': subbed_companies})
+  favs = Favorite.objects.filter(user=request.user)
+  favved_offers = set()
+  for fav in favs:
+    favved_offers.add(fav.job.id)
+
+  args = {
+      'offers': offers,
+      'favved_offers': favved_offers,
+      'subbed_companies': subbed_companies
+    }
+  page = render_to_string('catalog/joboffers.html', args)
   return HttpResponse(page)
 
 def register(request):

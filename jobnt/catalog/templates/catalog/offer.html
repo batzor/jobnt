@@ -28,14 +28,33 @@
         </li>
         {% endif %}
       </ul>
+
+      <div class="mb-3">
+        {% for jobtag in offer.jobtag_set.all %}
+          <span class="badge badge-pill badge-primary">{{ jobtag.tag.name }}</span>
+        {% endfor %}
+      </div>
+      
       <p class="card-text"> {{ offer.description }} </p>
       
       {% if offer.apply_link %}
         <a href="{{ offer.apply_link }}" class="btn btn-outline-primary" role="button">Apply</a>
       {% endif %}
       
-      <button type="button" class="btn btn-outline-warning">Add to Favorites</button>
+      <!-- Favorite button -->
+      {% if offer.id in favved_offers %}
+      <button type="button" class="favorite btn btn-outline-warning"
+        data-offer-id="{{ offer.id }}"
+        data-method="unfav"
+        >Remove from Favorites</button>
+      {% else %}
+      <button type="button" class="favorite btn btn-warning"
+        data-offer-id="{{ offer.id }}"
+        data-method="fav"
+        >Add to Favorites</button>
+      {% endif %}
       
+      <!-- Subscribe button -->
       {% if offer.company_id %}
         {% if offer.company_id.id in subbed_companies %}
           <button type="button" class="subscribe btn btn-outline-secondary"
@@ -44,7 +63,7 @@
             data-method="unsub"
             >Unsubscribe from {{ offer.company_id.name }}</button>
         {% else %}
-          <button type="button" class="subscribe btn btn-outline-secondary"
+          <button type="button" class="subscribe btn btn-secondary"
             data-company-id="{{ offer.company_id.id }}"
             data-company-name="{{ offer.company_id.name }}"
             data-method="sub"
