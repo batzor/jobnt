@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from .models import JobOffer
+from .models import JobOffer, Profile, Tag
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, AccordionGroup
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, MultiWidgetField
@@ -31,6 +31,10 @@ class JobSearchForm(forms.Form):
     label=False,
     required=False,
     widget=forms.SelectDateWidget)
+  tag_field = forms.ModelChoiceField(
+    label=False,
+    required=False,
+    queryset=Tag.objects.all().order_by('name'))
   # Setting the layout of the form 
   helper = FormHelper()
   helper.form_method = 'GET'
@@ -62,6 +66,15 @@ class JobSearchForm(forms.Form):
           attrs=(
             {'style': 'width: 33%; display: inline-block;'})
         )
+      ),
+      AccordionGroup('Tag', 
+        'tag_field'
       )
     )
   )
+
+
+class ProfileForm(forms.ModelForm):
+  class Meta:
+    model = Profile
+    fields = ('status', 'phone_number', 'occupation')
