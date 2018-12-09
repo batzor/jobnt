@@ -50,15 +50,16 @@ def make_filters(data):
 def show_offers(request, data):
   offers = JobOffer.objects.filter(**make_filters(data)).select_related()
   
-  subs = UserSubscription.objects.filter(user__exact=request.user)
   subbed_companies = set()
-  for sub in subs:
-    subbed_companies.add(sub.company.id)
-
-  favs = Favorite.objects.filter(user=request.user)
   favved_offers = set()
-  for fav in favs:
-    favved_offers.add(fav.job.id)
+  if request.user.is_authenticated:
+    subs = UserSubscription.objects.filter(user__exact=request.user)
+    for sub in subs:
+      subbed_companies.add(sub.company.id)
+
+    favs = Favorite.objects.filter(user=request.user)
+    for fav in favs:
+      favved_offers.add(fav.job.id)
 
   args = {
       'offers': offers,
