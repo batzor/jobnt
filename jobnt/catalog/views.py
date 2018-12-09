@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from .forms import JobSearchForm
 from .models import JobOffer
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def index(request):
@@ -44,3 +46,13 @@ def show_offers(data):
   offers = JobOffer.objects.filter(**make_filters(data)).select_related()
   page = render_to_string('catalog/joboffers.html', {'offers': offers})
   return HttpResponse(page)
+
+def register(request):
+  if request.method == 'POST':
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return redirect('/catalog/')
+  else:
+    form = UserCreationForm()
+    return render(request, 'catalog/register.html', {'form': form})

@@ -26,10 +26,16 @@
       <!-- NAVBAR -->
       <nav class="nav">
         <ul class="nav-menu">
-          <li class="nav-item"><a href="/catalog/">Catalog</a></li>
-          <li class="nav-item"><a href="/catalog/subs/">Subscriptions</a></li>
+          <li class="nav-item"><a href="{% url 'index' %}">Catalog</a></li>
+          <li class="nav-item"><a href="{% url 'subs' %}">Subscriptions</a></li>
           <li class="nav-item"><a href="/catalog/favs/">Favorites</a></li>
-          <li class="nav-item"><a href="/login">Login</a></li>
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout'%}">Logout</a>
+            {% else %}
+            <a href="{% url 'login'%}">Login</a>
+            {% endif %}
+          </li>
         </ul>
       </nav>
     </header>
