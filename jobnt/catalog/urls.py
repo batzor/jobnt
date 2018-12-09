@@ -7,4 +7,5 @@ urlpatterns = [
   path('search/', views.search, name='search'),
   path('subs/', subs.index, name='subs'),
   path('favs/', subs.favs, name='favs'),
+  path('add_sub/', subs.add_sub, name='add_sub'),
 ]

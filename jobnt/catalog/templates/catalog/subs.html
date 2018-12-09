@@ -6,12 +6,24 @@
 <section class="main-content">
 
   <h1 class="page-name">Subscriptions</h1>
-  <div class="container">
-    
-    <!-- CATALOG ITEMS -->
-    <main class="catalog" id="joboffers"> 
-    </main>
 
+  <div class="container">
+    <div class="row justify-content-centered">
+      <div class="col-md-8">
+        
+        <!-- SUBSCRIPTIONS -->
+        <main class="catalog">
+          {% if need_login %}
+            Please log in to see subscriptions. 
+          {% else %}
+            {% for sub in my_subs %}
+              {{ sub }},
+            {% endfor %}
+          {% endif %}
+        </main>
+
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %}

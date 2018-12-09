@@ -38,7 +38,7 @@
       <button type="button" class="btn btn-outline-warning">Add to Favorites</button>
       
       {% if offer.company_id %}
-        <button type="button" class="btn btn-outline-secondary">Subscribe to {{ offer.company_id.name }}</button>
+        <button type="button" class="subscribe-to-company btn btn-outline-secondary" data-company-id="{{ offer.company_id.id }}">Subscribe to {{ offer.company_id.name }}</button>
       {% endif %}
     </div>
   </div>
