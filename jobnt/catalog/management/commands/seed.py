@@ -36,7 +36,7 @@ class JobFactory(factory.django.DjangoModelFactory):
 class SubscriptionFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.UserSubscription
-    user = factory.Iterator(User.)
+    user = factory.Iterator(User.objects.all())
     company = factory.Iterator(models.Company.objects.all())
 
 class FavoriteFactory(factory.django.DjangoModelFactory):
@@ -84,6 +84,10 @@ class Command(BaseCommand):
             default=100,
             type=int,
             help='The number of fake jog tags to create.')
+        parser.add_argument('--sub',
+            default=100,
+            type=int,
+            help='The number of fake subscriptions to create.')
 
     def handle(self, *args, **options):
         for _ in range(options['user']):
