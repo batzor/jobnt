@@ -1,0 +1,32 @@
+{% extends 'catalog/wrapper.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- MAIN CONTAINER -->
+<section class="main-content">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 card border-primary">
+        <div class="card-body">
+          <h3 class="card-title font-weight-bold">Filters</h3>
+          {% crispy form %}
+        </div>
+      </div>
+      <div class="col-md-8">
+        <!-- CATALOG ITEMS -->
+        <main class="catalog" id="joboffers"> 
+        </main>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<!-- Here goes all js scripts that you want to load for this page -->
+{% load static %}
+<script type='text/javascript' src='{% static "catalog/scripts/bootstrap-tab.js" %}'></script>
+<script type='text/javascript' src='{% static "catalog/scripts/main.js" %}'></script>
+{% endblock %}
