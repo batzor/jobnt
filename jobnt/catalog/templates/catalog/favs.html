@@ -9,9 +9,14 @@
   <div class="container">
     
     <!-- CATALOG ITEMS -->
-    <main class="catalog" id="joboffers"> 
-    </main>
 
+    <main class="catalog" id="favs"> 
+      {% for offer in offers %}
+        
+        {% include "catalog/offer.html" %}
+
+      {% endfor %}
+    </main>
   </div>
 </section>
 {% endblock %}
