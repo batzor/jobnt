@@ -1,6 +1,6 @@
 from django import forms
 from django.utils import timezone
-from .models import JobOffer
+from .models import JobOffer, Profile
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions, Accordion, AccordionGroup
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, MultiWidgetField
@@ -65,3 +65,9 @@ class JobSearchForm(forms.Form):
       )
     )
   )
+
+
+class ProfileForm(forms.ModelForm):
+  class Meta:
+    model = Profile
+    fields = ('status', 'phone_number', 'occupation')

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
-from .forms import JobSearchForm
+from .forms import JobSearchForm, ProfileForm
 from .models import JobOffer
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -50,14 +50,24 @@ def show_offers(data):
 
 def register(request):
   if request.method == 'POST':
-    form = UserCreationForm(request.POST)
-    if form.is_valid():
-      form.save()
-      username = form.cleaned_data['username']
-      raw_password = form.cleaned_data['password1']
+    user_form = UserCreationForm(request.POST)
+    profile_form = ProfileForm(request.POST)
+    if user_form.is_valid() and profile_form.is_valid():
+      user = user_form.save()
+      user.refresh_from_db()
+      user.profile.status = profile_form.cleaned_data.get('status')
+      user.profile.phone_number = profile_form.cleaned_data.get('phone_number')
+      user.profile.occupation = profile_form.cleaned_data.get('occupation')
+      user.save()
+      username = user_form.cleaned_data['username']
+      raw_password = user_form.cleaned_data['password1']
       user = authenticate(username=username, password=raw_password)
       login(request, user)
       return redirect('/catalog/')
   else:
-    form = UserCreationForm()
-  return render(request, 'catalog/register.html', {'form': form})
+    user_form = UserCreationForm()
+    profile_form = ProfileForm()
+  return render(request, 'catalog/register.html', {
+    'form': user_form,
+    'pro_form': profile_form
+  })

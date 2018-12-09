@@ -10,6 +10,7 @@
           {% csrf_token %}
           {% load crispy_forms_tags %}
           {{ form|crispy }}
+          {{ pro_form|crispy}}
           <button type="submit" class="btn btn-primary">Sign Up</button>
           <input type="hidden" name="next" value="{{ next }}" />
           <a href="{% url 'login' %}" class="btn btn-link">Back to login</a>
