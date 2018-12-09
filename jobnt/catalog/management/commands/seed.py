@@ -7,7 +7,6 @@ import factory
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
-
     username = factory.Faker('user_name')
     first_name = factory.Faker('first_name') 
     last_name = factory.Faker('last_name')
@@ -17,7 +16,6 @@ class UserFactory(factory.django.DjangoModelFactory):
 class CompanyFactory(factory.django.DjangoModelFactory):  
     class Meta:
         model = models.Company
-    
     name = factory.Faker('name')
     description = factory.Faker('catch_phrase')
     emp_number = factory.Faker('random_int', min = 1, max = 1000)
@@ -25,20 +23,25 @@ class CompanyFactory(factory.django.DjangoModelFactory):
 class JobFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.JobOffer
-    
     name = factory.Faker('job')
     location = factory.Faker('address')
+    company_id = factory.Iterator(models.Company.objects.all())
     deadline = factory.Faker('date_between', start_date="-2y", end_date="+1y")
-    salary = factory.Faker('random_int', min = 1000000, max = 10000000)
-    duration = factory.Faker('random_int', min = 2, max = 12)
+    salary = factory.Faker('random_int', min = 1000, max = 10000)
+    duration = factory.Faker('random_int', min = 1, max = 12)
     description = factory.Faker('catch_phrase')
     date_posted = factory.Faker('date_between', start_date="-3y", end_date="today")
     recruiter = factory.Iterator(User.objects.all()) 
 
+class SubscriptionFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.UserSubscription
+    user = factory.Iterator(User.)
+    company = factory.Iterator(models.Company.objects.all())
+
 class FavoriteFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Favorite
-
     user = factory.Iterator(User.objects.all())
     job = factory.Iterator(models.JobOffer.objects.all())
 
@@ -95,4 +98,6 @@ class Command(BaseCommand):
             TagFactory.create()
         for _ in range(options['jobtag']):
             JobTagFactory.create()
+        for _ in range(options['sub']):
+            SubscriptionFactory.create()
 
