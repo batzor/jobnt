@@ -33,7 +33,7 @@ def make_filters(data):
   if location:
     filters['location__iexact'] = location
   if min_salary:
-    filters['salary__gte'] = salary
+    filters['salary__gte'] = min_salary
   if duration: 
     filters['duration__gte'] = duration
   if date_posted:

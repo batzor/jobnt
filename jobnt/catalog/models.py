@@ -31,6 +31,9 @@ class JobOffer(models.Model):
         if self.deadline < timezone.now():
             return True
         return False
+    
+    def __str__(self):
+        return self.name
 
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -38,6 +41,9 @@ class Favorite(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length = 40, primary_key=True)
+    
+    def __str__(self):
+        return self.name
 
 class JobTag(models.Model):
     job = models.ForeignKey(JobOffer, on_delete=models.CASCADE)
