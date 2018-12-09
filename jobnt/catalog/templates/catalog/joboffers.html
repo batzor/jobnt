@@ -35,9 +35,11 @@
         <a href="{{ offer.apply_link }}" class="btn btn-outline-primary" role="button">Apply</a>
       {% endif %}
       
+      {% if user.is_authenticated %}
       <button type="button" class="btn btn-outline-warning">Add to Favorites</button>
+      {% endif %}
       
-      {% if offer.company_id %}
+      {% if offer.company_id and user.is_authenticated %}
         <button type="button" class="btn btn-outline-secondary">Subscribe to {{ offer.company_id.name }}</button>
       {% endif %}
     </div>

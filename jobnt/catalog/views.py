@@ -17,7 +17,7 @@ def index(request):
 def search(request):
   form = JobSearchForm(request.GET)
   if form.is_valid():
-    return show_offers(form.cleaned_data)
+    return show_offers(form.cleaned_data, request)
   else:
     return HttpResponse('something is wrong')
 
@@ -28,6 +28,8 @@ def make_filters(data):
   min_salary = data['salary_field'] # int
   duration = data['duration_field'] # int
   date_posted = data['date_posted_field'] # datetime.date
+  tag = data['tag_field'] # Tag object
+  print(tag)
   filters = dict()
   if name:
     filters['name__icontains'] = name
@@ -41,11 +43,13 @@ def make_filters(data):
     filters['duration__gte'] = duration
   if date_posted:
     filters['date_posted__gte'] = date_posted
+  if tag:
+    filters['jobtag__tag'] = tag
   return filters 
 
-def show_offers(data):
+def show_offers(data, request):
   offers = JobOffer.objects.filter(**make_filters(data)).select_related()
-  page = render_to_string('catalog/joboffers.html', {'offers': offers})
+  page = render_to_string('catalog/joboffers.html', {'offers': offers, 'user': request.user})
   return HttpResponse(page)
 
 def register(request):
