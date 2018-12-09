@@ -1,0 +1,56 @@
+<div class="card border-primary mb-3">
+    <div class="card-body">
+
+      <h3 class="card-title font-weight-bold d-inline-block">{{ offer.name }}</h3>
+      <ul class="list-inline"> 
+        {% if offer.company_id %}
+        <li class="list-inline-item">
+          <i class="fas fa-building mr-1"></i>
+          {{ offer.company_id.name }}
+        </li>
+        {% endif %}
+        {% if offer.location %}
+        <li class="list-inline-item">
+          <i class="fas fa-map-marker-alt mr-1"></i>
+          {{ offer.location }}
+        </li>
+        {% endif %}
+        {% if offer.duration %}
+        <li class="list-inline-item">
+          <i class="far fa-clock mr-1"> </i>
+          {{ offer.duration }} weeks 
+        </li>
+        {% endif%}
+        {% if offer.salary %}
+        <li class="list-inline-item">
+          <i class="fas fa-dollar-sign mr-1"></i>
+          {{ offer.salary }}
+        </li>
+        {% endif %}
+      </ul>
+      <p class="card-text"> {{ offer.description }} </p>
+      
+      {% if offer.apply_link %}
+        <a href="{{ offer.apply_link }}" class="btn btn-outline-primary" role="button">Apply</a>
+      {% endif %}
+      
+      <button type="button" class="btn btn-outline-warning">Add to Favorites</button>
+      
+      {% if offer.company_id %}
+        {% if offer.company_id.id in subbed_companies %}
+          <button type="button" class="subscribe btn btn-outline-secondary"
+            data-company-id="{{ offer.company_id.id }}"
+            data-company-name="{{ offer.company_id.name }}"
+            data-method="unsub"
+            >Unsubscribe from {{ offer.company_id.name }}</button>
+        {% else %}
+          <button type="button" class="subscribe btn btn-outline-secondary"
+            data-company-id="{{ offer.company_id.id }}"
+            data-company-name="{{ offer.company_id.name }}"
+            data-method="sub"
+            >Subscribe to {{ offer.company_id.name }}</button>
+        {% endif %}
+
+      {% endif %}
+    </div>
+  </div>

@@ -2,10 +2,9 @@
   font-family: Arial, sans-serif;
 }
 
-.page-name {
+.nice-header {
   text-align: center;
-  font-size: 1.8em;
-  width: 200px;
+  width: 300px;
   margin: auto;
   border-bottom: 2px dotted #000;
   margin-bottom: 20px;

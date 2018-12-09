@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from .forms import JobSearchForm
-from .models import JobOffer
+from .models import JobOffer, UserSubscription
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
@@ -17,7 +17,7 @@ def index(request):
 def search(request):
   form = JobSearchForm(request.GET)
   if form.is_valid():
-    return show_offers(form.cleaned_data)
+    return show_offers(request, form.cleaned_data)
   else:
     return HttpResponse('something is wrong')
 
@@ -43,9 +43,15 @@ def make_filters(data):
     filters['date_posted__gte'] = date_posted
   return filters 
 
-def show_offers(data):
+def show_offers(request, data):
   offers = JobOffer.objects.filter(**make_filters(data)).select_related()
-  page = render_to_string('catalog/joboffers.html', {'offers': offers})
+  
+  subs = UserSubscription.objects.filter(user__exact=request.user)
+  subbed_companies = set()
+  for sub in subs:
+    subbed_companies.add(sub.company.id)
+
+  page = render_to_string('catalog/joboffers.html', {'offers': offers, 'subbed_companies': subbed_companies})
   return HttpResponse(page)
 
 def register(request):

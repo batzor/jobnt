@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import UserSubscription
+from .models import UserSubscription, Company, JobOffer
+from django.http import HttpResponse
 
 def index(request):
   args = {}
@@ -8,24 +9,55 @@ def index(request):
     args['need_login'] = True
   else:
     # UserSubscription.
-    my_subs = UserSubscription.objects.filter(user__exact=request.user.id)
-    args = {'my_subs': my_subs}
+    subs = UserSubscription.objects.filter(user=request.user)
+    offers = JobOffer.objects.all()
+    
+    subbed_companies = set()
+    for sub in subs:
+      subbed_companies.add(sub.company.id)
+
+    args = {
+        'need_login': False,
+        'subs': subs,
+        'no_subs': subs.count() == 0,
+        'offers': offers,
+        'subbed_companies': subbed_companies,
+      }
 
   return render(request, 'catalog/subs.html', args)
 
 def add_sub(request):
-  user_id = request.user.id
   company_id = request.GET['company_id']
-  return company_id
+  user = request.user
+  try:
+    company = Company.objects.get(id=company_id)
+  except:
+    return HttpResponse("Error: company doesnt exist")
+  
+  exists = UserSubscription.objects.filter(user__exact=user, company__exact=company).count() > 0
+  
+  if exists:
+    return HttpResponse("OK: subscribed (already)")
+  else:
+    sub = UserSubscription.objects.create(user=user, company=company)
+    sub.save()
+    return HttpResponse("OK: subscribed")
 
-  # exists = UserSubscription.filter(user__exact=my_id, company__exact=company_id).count() > 0
-  #
-  # if exists:
-  #   return "already subscribed"
-  # else:
-  #   sub = UserSubscription.create(user=my_id, company=company_id)
-  #   sub.save()
-  #   return "success"
+def rem_sub(request):
+  company_id = request.GET['company_id']
+  user = request.user
+  try:
+    company = Company.objects.get(id=company_id)
+  except:
+    return HttpResponse("Error: company doesnt exist")
+  
+  exists = UserSubscription.objects.filter(user__exact=user, company__exact=company).count() > 0
+  
+  if exists:
+    UserSubscription.objects.filter(user__exact=user, company__exact=company).delete()
+    return HttpResponse("OK: unsubscribed")
+  else:
+    return HttpResponse("OK: not subscribed")
 
 def favs(request):
   args = {}
