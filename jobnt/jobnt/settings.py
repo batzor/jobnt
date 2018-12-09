@@ -126,3 +126,7 @@ STATIC_URL = '/static/'
 
 # Template pack for crispy-forms package
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Redirect users after login/logout to homepage
+LOGIN_REDIRECT_URL = '/catalog/'
+LOGOUT_REDIRECT_URL = '/catalog/'
