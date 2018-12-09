@@ -104,4 +104,3 @@ class Command(BaseCommand):
             JobTagFactory.create()
         for _ in range(options['sub']):
             SubscriptionFactory.create()
-
