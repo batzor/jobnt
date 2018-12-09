@@ -4,8 +4,9 @@ env/
 # VSCode settings
 .vscode/
 
-# vim cache files
+# vim cache/swap files
 *~
+*.swp
 
 # Compiled python files
 *.pyc
