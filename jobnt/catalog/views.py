@@ -5,6 +5,7 @@ from .forms import JobSearchForm
 from .models import JobOffer
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 
 # Create your views here.
 def index(request):
@@ -52,7 +53,11 @@ def register(request):
     form = UserCreationForm(request.POST)
     if form.is_valid():
       form.save()
+      username = form.cleaned_data['username']
+      raw_password = form.cleaned_data['password1']
+      user = authenticate(username=username, password=raw_password)
+      login(request, user)
       return redirect('/catalog/')
   else:
     form = UserCreationForm()
-    return render(request, 'catalog/register.html', {'form': form})
+  return render(request, 'catalog/register.html', {'form': form})

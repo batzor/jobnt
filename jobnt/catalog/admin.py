@@ -1,7 +1,7 @@
 from django.contrib import admin
 from catalog import models
 
-admin.site.register(models.CustomUser)
+admin.site.register(models.Profile)
 admin.site.register(models.UserSubscription)
 admin.site.register(models.Company)
 admin.site.register(models.JobOffer)
