@@ -4,6 +4,7 @@
 2. Install Python dependencies
 3. Set up database
 4. Install Django Migrations
+5. Seed the database (with random data)
 6. Run the server
 
 ## 1. Install PostgreSQL
