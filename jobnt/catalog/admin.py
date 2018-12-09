@@ -1,8 +1,10 @@
 from django.contrib import admin
-from catalog.models import Company, JobOffer, Favorite, JobTag, Tag
+from catalog import models
 
-admin.site.register(Company)
-admin.site.register(JobOffer)
-admin.site.register(Favorite)
-admin.site.register(Tag)
-admin.site.register(JobTag)
+admin.site.register(models.CustomUser)
+admin.site.register(models.UserSubscription)
+admin.site.register(models.Company)
+admin.site.register(models.JobOffer)
+admin.site.register(models.Favorite)
+admin.site.register(models.Tag)
+admin.site.register(models.JobTag)
