@@ -17,7 +17,7 @@ def index(request):
 def search(request):
   form = JobSearchForm(request.GET)
   if form.is_valid():
-    return show_offers(form.cleaned_data, request)
+    return show_offers(request, form.cleaned_data)
   else:
     return HttpResponse('something is wrong')
 
@@ -88,7 +88,7 @@ def register(request):
   else:
     user_form = UserCreationForm()
     profile_form = ProfileForm()
-  
+
   return render(request, 'catalog/register.html', {
       'form': user_form,
       'pro_form': profile_form
