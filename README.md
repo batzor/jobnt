@@ -1,5 +1,6 @@
-# jobnt
-Job wiki
+![internshipn't](https://github.com/AnuarTB/jobnt/blob/master/jobnt/catalog/static/catalog/logo.png)
+---
+internshipn't is a website where you can search for a job of your dream :)
 
 ## Setting up Python (pip) libraries
 First of all, install all pip dependencies:
