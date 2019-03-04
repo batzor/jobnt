@@ -1,3 +1,11 @@
+![internshipn't](https://github.com/AnuarTB/jobnt/blob/master/jobnt/catalog/static/catalog/logo.png)
+---
+internshipn't is a website where you can search for a job of your dream :)
+
+# Demo
+
+![Demo gif](demo.gif)
+
 # jobnt: Installation
 
 1. Install PostgreSQL
@@ -6,10 +14,6 @@
 4. Install Django Migrations
 5. Seed the database (with random data)
 6. Run the server
-
-## 0. Demo
-
-![Demo gif](demo.gif)
 
 ## 1. Install PostgreSQL
 
