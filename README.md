@@ -7,6 +7,10 @@
 5. Seed the database (with random data)
 6. Run the server
 
+## 0. Demo
+
+![Demo gif](demo.gif)
+
 ## 1. Install PostgreSQL
 
 Download and install [PostgreSQL](https://www.postgresql.org/download/).
