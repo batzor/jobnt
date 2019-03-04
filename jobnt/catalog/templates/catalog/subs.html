@@ -5,16 +5,45 @@
 <!-- MAIN CONTAINER -->
 <section class="main-content">
 
-  <h1 class="page-name">Subscriptions</h1>
-  <div class="container">
-    
-    <!-- CATALOG ITEMS -->
-    <main class="catalog" id="joboffers"> 
-    </main>
+  <h3 class="nice-header">Subscriptions</h3>
 
+  <div class="container">
+    <div class="rowjustify-content-centered">
+      <div class="col-8 mx-auto">
+        
+        <!-- SUBSCRIPTIONS -->
+        <main class="catalog">
+          {% if need_login %}
+            <div style="text-align: center">Please log in to see subscriptions.</div>
+          {% elif no_subs %}
+            <div style="text-align: center">No subscriptions.</div>
+          {% else %}
+            {% for sub in subs %}
+              <h5 class="nice-header">Company: {{ sub.company.name }}</h5>
+              
+              {% for offer in offers %}
+                {% if offer.company_id == sub.company %}
+
+                  {% include "catalog/offer.html" %}
+
+                {% endif %}
+              {% endfor %}
+              
+
+            {% endfor %}
+          {% endif %}
+        </main>
+
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %}
 
 {% block js %}
+
+{% load static %}
+<script type='text/javascript' src='{% static "catalog/scripts/main.js" %}'></script>
+<script type='text/javascript' src='{% static "catalog/scripts/subs.js" %}'></script>
+
 {% endblock %}

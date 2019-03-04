@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 from .forms import JobSearchForm, ProfileForm
-from .models import JobOffer
+from .models import JobOffer, UserSubscription, Favorite
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
@@ -17,7 +17,7 @@ def index(request):
 def search(request):
   form = JobSearchForm(request.GET)
   if form.is_valid():
-    return show_offers(form.cleaned_data, request)
+    return show_offers(request, form.cleaned_data)
   else:
     return HttpResponse('something is wrong')
 
@@ -47,9 +47,27 @@ def make_filters(data):
     filters['jobtag__tag'] = tag
   return filters 
 
-def show_offers(data, request):
+def show_offers(request, data):
   offers = JobOffer.objects.filter(**make_filters(data)).select_related()
-  page = render_to_string('catalog/joboffers.html', {'offers': offers, 'user': request.user})
+  
+  subbed_companies = set()
+  favved_offers = set()
+  if request.user.is_authenticated:
+    subs = UserSubscription.objects.filter(user__exact=request.user)
+    for sub in subs:
+      subbed_companies.add(sub.company.id)
+
+    favs = Favorite.objects.filter(user=request.user)
+    for fav in favs:
+      favved_offers.add(fav.job.id)
+
+  args = {
+      'offers': offers,
+      'favved_offers': favved_offers,
+      'subbed_companies': subbed_companies,
+      'user': request.user
+    }
+  page = render_to_string('catalog/joboffers.html', args)
   return HttpResponse(page)
 
 def register(request):
@@ -71,7 +89,8 @@ def register(request):
   else:
     user_form = UserCreationForm()
     profile_form = ProfileForm()
+
   return render(request, 'catalog/register.html', {
-    'form': user_form,
-    'pro_form': profile_form
-  })
+      'form': user_form,
+      'pro_form': profile_form
+    })

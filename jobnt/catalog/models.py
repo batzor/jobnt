@@ -11,7 +11,7 @@ from django.db.models.signals import post_save
 
 class Profile(models.Model):
     """Base user model extension"""
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     ALL_STATUS = (
         (0, 'Closed to offers'),
         (1, 'Open to offers'),
